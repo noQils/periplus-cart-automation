@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Periplus Cart Automation Suite" verbose="1">
+    <test name="Periplus Cart Tests">
+        <packages>
+            <package name="tests" />
+        </packages>
+    </test>
+</suite>
