@@ -11,8 +11,7 @@ public class CartPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    private final By cartProductTitle =
-        By.xpath("//p[contains(@class,'product-name')]//a[normalize-space()='The Age of AI: And Our Human Future']");
+    private final By cartProductTitle = By.cssSelector("p.product-name.limit-lines a");
 
     public CartPage(WebDriver driver) {
         this.driver = driver;
@@ -24,7 +23,7 @@ public class CartPage {
         return driver.getCurrentUrl().contains("/checkout/cart");
     }
 
-    public boolean isCorrectProductDisplayedInCart() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(cartProductTitle)).isDisplayed();
+    public String getCartProductTitle() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(cartProductTitle)).getText().trim();
     }
 }

@@ -30,7 +30,18 @@ public class ProductPage {
 
     public boolean isProductPageDisplayed() {
         waitForOverlayToClear();
-        wait.until(ExpectedConditions.elementToBeClickable(addToCartButton));
-        return driver.getCurrentUrl().contains("/p/9780316273992/the-age-of-ai-and-our-human-future");
+        return wait.until(ExpectedConditions.elementToBeClickable(addToCartButton)).isDisplayed();
+    }
+
+    public String getProductTitle() {
+        waitForOverlayToClear();
+        String pageTitle = driver.getTitle();
+        int separatorIndex = pageTitle.indexOf(" | ");
+
+        if (separatorIndex > 0) {
+            return pageTitle.substring(0, separatorIndex).trim();
+        }
+
+        return pageTitle.trim();
     }
 }

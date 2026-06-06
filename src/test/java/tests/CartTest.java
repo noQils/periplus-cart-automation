@@ -44,6 +44,8 @@ public class CartTest extends BaseTest {
 
         Assert.assertTrue(productPage.isProductPageDisplayed(),
         "Product page should be displayed after clicking on the search result product.");
+        Assert.assertEquals(productPage.getProductTitle(), productName,
+        "The product page should display the expected product title.");
 
         // Step 3: Add the product to the cart and verify that it has been added successfully
         productPage.clickAddToCart();
@@ -53,7 +55,7 @@ public class CartTest extends BaseTest {
 
         Assert.assertTrue(cartPage.isCartPageDisplayed(),
         "Cart page should be displayed after adding an item to the cart.");
-        Assert.assertTrue(cartPage.isCorrectProductDisplayedInCart(),
-        "The correct product should be displayed in the cart.");
+        Assert.assertEquals(cartPage.getCartProductTitle(), productName,
+        "The cart should contain the expected product.");
     }
 }
