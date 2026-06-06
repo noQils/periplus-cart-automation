@@ -12,7 +12,6 @@ public class SearchResultPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    private final By firstSearchResultLink = By.cssSelector("div.product-content.product-contents h3 a");
     private final By preloaderOverlay = By.cssSelector("div.preloader");
 
     public SearchResultPage(WebDriver driver) {
@@ -24,9 +23,14 @@ public class SearchResultPage {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(preloaderOverlay));
     }
 
-    public void clickSearchResult() {
+    public void clickProductByTitle(String productTitle) {
         waitForOverlayToClear();
-        WebElement resultLink = wait.until(ExpectedConditions.elementToBeClickable(firstSearchResultLink));
+        String titleFragment = productTitle.contains(":")
+            ? productTitle.substring(0, productTitle.indexOf(':')).trim()
+            : productTitle.trim();
+        By productLink = By.xpath("//div[contains(@class,'product-content')]//h3/a[contains(normalize-space(), \""
+            + titleFragment + "\")]");
+        WebElement resultLink = wait.until(ExpectedConditions.elementToBeClickable(productLink));
         resultLink.click();
     }
 }

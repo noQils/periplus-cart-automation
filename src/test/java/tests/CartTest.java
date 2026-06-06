@@ -40,7 +40,7 @@ public class CartTest extends BaseTest {
         ProductPage productPage = new ProductPage(driver);
 
         navbar.searchForProduct(productName);
-        searchResultPage.clickSearchResult();
+        searchResultPage.clickProductByTitle(productName);
 
         Assert.assertTrue(productPage.isProductPageDisplayed(),
         "Product page should be displayed after clicking on the search result product.");
