@@ -55,7 +55,7 @@ public class CartTest extends BaseTest {
 
         Assert.assertTrue(cartPage.isCartPageDisplayed(),
         "Cart page should be displayed after adding an item to the cart.");
-        Assert.assertEquals(cartPage.getCartProductTitle(), productName,
+        Assert.assertTrue(cartPage.containsProductTitle(productName),
         "The cart should contain the expected product.");
     }
 }

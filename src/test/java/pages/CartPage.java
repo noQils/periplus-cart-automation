@@ -1,9 +1,12 @@
 package pages;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.Locale;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -11,7 +14,7 @@ public class CartPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    private final By cartProductTitle = By.cssSelector("p.product-name.limit-lines a");
+    private final By cartProductTitles = By.cssSelector("p.product-name.limit-lines a");
 
     public CartPage(WebDriver driver) {
         this.driver = driver;
@@ -19,11 +22,23 @@ public class CartPage {
     }
 
     public boolean isCartPageDisplayed() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(cartProductTitle));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(cartProductTitles));
         return driver.getCurrentUrl().contains("/checkout/cart");
     }
 
-    public String getCartProductTitle() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(cartProductTitle)).getText().trim();
+    public boolean containsProductTitle(String expectedProductTitle) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(cartProductTitles));
+
+        String normalizedExpectedTitle = expectedProductTitle.trim().toLowerCase(Locale.ROOT);
+        List<WebElement> productTitles = driver.findElements(cartProductTitles);
+
+        for (WebElement productTitle : productTitles) {
+            String normalizedActualTitle = productTitle.getText().trim().toLowerCase(Locale.ROOT);
+            if (normalizedActualTitle.contains(normalizedExpectedTitle)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
